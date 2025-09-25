@@ -31,7 +31,7 @@ import { selectCurrentStep, selectValidatedSteps } from './store/form.selectors'
   template: `
     <mat-toolbar color="primary" class="app-toolbar">
       <mat-icon>assignment</mat-icon>
-      <span>Formulário Multi-etapas</span>
+      <span>Formulário Verity</span>
     </mat-toolbar>
 
     <div class="container" role="main">

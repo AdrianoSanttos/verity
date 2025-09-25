@@ -254,7 +254,7 @@ export class ProfessionalInfoComponent implements OnInit {
   }
 
   validateSalario(control: any): { [key: string]: any } | null {
-    if (!control.value) return null;
+    if (control.value === null || control.value === undefined || control.value === '') return null;
     
     let value = control.value;
     if (typeof value === 'string') {
@@ -283,19 +283,13 @@ export class ProfessionalInfoComponent implements OnInit {
            !!(control?.touched || control?.dirty);
   }
 
-  onSalarioFocus(event: any): void {
-    // A máscara ngx-mask já cuida da formatação, não precisamos intervir
-    // Apenas garantir que o valor está correto no FormControl
-  }
+  onSalarioFocus(event: any): void {}
 
   onSalarioBlur(event: any): void {
     // A máscara ngx-mask já cuida da formatação
     // Apenas validar se o valor é válido
     const currentValue = this.professionalForm.get('salario')?.value;
-    if (currentValue && typeof currentValue === 'string') {
-      // Garantir que o FormControl mantém o valor formatado pela máscara
-      // Não alteramos o valor aqui para evitar conflitos com a máscara
-    }
+    if (currentValue && typeof currentValue === 'string') { }
   }
 
   onNext(): void {
@@ -304,13 +298,29 @@ export class ProfessionalInfoComponent implements OnInit {
       
       // Processa o salário: converte string formatada para número
       if (typeof formValue.salario === 'string') {
-        // Remove prefixo R$ e espaços
-        const cleanValue = formValue.salario.replace(/^R\$\s*/, '').trim();
+        // Remove prefixo R$, espaços e caracteres especiais
+        let cleanValue = formValue.salario.replace(/^R\$\s*/, '').trim();
         
-        // Conversão do formato brasileiro para número
-        // "1.500,00" → remove pontos → "1500,00" → troca vírgula → "1500.00" → 1500
-        const numericString = cleanValue.replace(/\./g, '').replace(',', '.');
-        const numericValue = Number(numericString);
+        // Parse more robustly - handle different formats
+        // Remove all non-numeric characters except comma and period
+        cleanValue = cleanValue.replace(/[^\d,.]/g, '');
+        
+        // Handle Brazilian format: 5.000,00 -> 5000.00
+        if (cleanValue.includes('.') && cleanValue.includes(',')) {
+          // Brazilian format with thousands separator and decimal comma
+          cleanValue = cleanValue.replace(/\./g, '').replace(',', '.');
+        } else if (cleanValue.includes(',') && !cleanValue.includes('.')) {
+          // Simple comma decimal format: 5000,00 -> 5000.00
+          cleanValue = cleanValue.replace(',', '.');
+        } else if (cleanValue.includes('.') && cleanValue.split('.').length === 2 && cleanValue.split('.')[1].length <= 2) {
+          // Already in correct format: 5000.00
+          // No change needed
+        } else if (cleanValue.includes('.') && cleanValue.split('.').length > 2) {
+          // Multiple dots, treat as thousands separator: 5.000.000 -> 5000000
+          cleanValue = cleanValue.replace(/\./g, '');
+        }
+        
+        const numericValue = parseFloat(cleanValue);
         
         // Verificação de segurança
         if (!isNaN(numericValue) && numericValue > 0) {

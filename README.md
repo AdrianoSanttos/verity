@@ -151,6 +151,58 @@ O sistema gera um PDF completo com:
 - Formatação profissional
 - Valores monetários formatados em Real (R$)
 
+## Screenshots
+
+Etapa 1 do formulário:
+
+<p align="center">
+  <img src="./docs/step1.jpg" alt="Main Page" width="100%">
+</p>
+
+Etapa 2 do formulário:
+
+<p align="center">
+  <img src="./docs/step2.jpg" alt="Main Page" width="100%">
+</p>
+
+Etapa 3 do formulário:
+
+<p align="center">
+  <img src="./docs/step3.jpg" alt="Main Page" width="100%">
+</p>
+
+Resumo do formulário:
+
+<p align="center">
+  <img src="./docs/step4.jpg" alt="Main Page" width="100%">
+</p>
+
+Exportação PDF:
+
+<p align="center">
+  <img src="./docs/step5.jpg" alt="Main Page" width="100%">
+</p>
+
+Test Karma | Jasmine | Front-End:
+
+<p align="center">
+  <img src="./docs/karma.jpg" alt="Form Page" width="100%">
+</p>
+
+<p align="center">
+  <img src="./docs/coverage.jpg" alt="Form Page" width="100%">
+</p>
+
+<p align="center">
+  <img src="./docs/ngtest.jpg" alt="Form Page" width="60%">
+</p>
+
+Responsividade para se adaptar a diferentes layouts de tela:
+
+<p align="center">
+  <img src="./docs/responsivo.jpg" alt="Main Page" width="100%">
+</p>
+
 ## 🚧 Próximas Funcionalidades
 
 - [ ] Integração com API real de CEP
