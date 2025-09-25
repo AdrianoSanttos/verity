@@ -89,7 +89,6 @@ import { selectLoading, selectProfessionalInfo, selectProfessions } from '../../
                    [allowNegativeNumbers]="false"
                    [attr.aria-describedby]="'salario-error'"
                    [attr.aria-invalid]="professionalForm.get('salario')?.invalid && professionalForm.get('salario')?.touched"
-                   (focus)="onSalarioFocus($event)"
                    (blur)="onSalarioBlur($event)">
             <mat-error *ngIf="shouldShowError('salario', 'required')">
               Salário é obrigatório
@@ -283,13 +282,15 @@ export class ProfessionalInfoComponent implements OnInit {
            !!(control?.touched || control?.dirty);
   }
 
-  onSalarioFocus(event: any): void {}
-
   onSalarioBlur(event: any): void {
     // A máscara ngx-mask já cuida da formatação
     // Apenas validar se o valor é válido
-    const currentValue = this.professionalForm.get('salario')?.value;
-    if (currentValue && typeof currentValue === 'string') { }
+    const salarioControl = this.professionalForm.get('salario');
+    if (salarioControl?.value) {
+      // Força a validação para mostrar erros imediatamente
+      salarioControl.markAsTouched();
+      salarioControl.updateValueAndValidity();
+    }
   }
 
   onNext(): void {

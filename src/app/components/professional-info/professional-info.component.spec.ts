@@ -1,6 +1,5 @@
 import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -64,7 +63,6 @@ describe('ProfessionalInfoComponent', () => {
       imports: [
         ProfessionalInfoComponent,
         ReactiveFormsModule,
-        NoopAnimationsModule,
         MatButtonModule,
         MatCardModule,
         MatFormFieldModule,
@@ -348,19 +346,24 @@ describe('ProfessionalInfoComponent', () => {
         { input: '1234.56', expected: 1234.56 }
       ];
 
+      // Define regex patterns for reuse
+      const brazilianFormatRegex = /^\d{1,3}(\.\d{3})*,\d{2}$/;
+      const simpleDecimalRegex = /^\d+,\d{2}$/;
+
       testValues.forEach(test => {
         // Simulate the conversion logic
         let cleanValue = test.input.replace(/^R\$\s*/, '').trim();
         cleanValue = cleanValue.replace(/[^\d,.]/g, '');
         
-        if (cleanValue.match(/^\d{1,3}(\.\d{3})*,\d{2}$/)) {
+        // Use RegExp.exec() instead of String.match()
+        if (brazilianFormatRegex.exec(cleanValue)) {
           cleanValue = cleanValue.replace(/\./g, '').replace(',', '.');
-        } else if (cleanValue.match(/^\d+,\d{2}$/)) {
+        } else if (simpleDecimalRegex.exec(cleanValue)) {
           cleanValue = cleanValue.replace(',', '.');
         }
         
         const result = parseFloat(cleanValue);
-        expect(result).toBe(test.expected, `Failed for input: ${test.input}`);
+        expect(result).withContext(`Converting input: ${test.input}`).toBe(test.expected);
       });
     });
 
@@ -617,15 +620,6 @@ describe('ProfessionalInfoComponent', () => {
   });
 
   describe('Salary field events', () => {
-    it('should call onSalarioFocus when salary field is focused', () => {
-      spyOn(component, 'onSalarioFocus');
-      
-      const salarioField = fixture.debugElement.query(By.css('input[formControlName="salario"]'));
-      salarioField.triggerEventHandler('focus', { target: { value: 'R$ 1.000,00' } });
-      
-      expect(component.onSalarioFocus).toHaveBeenCalled();
-    });
-
     it('should call onSalarioBlur when salary field loses focus', () => {
       spyOn(component, 'onSalarioBlur');
       
@@ -794,15 +788,6 @@ describe('ProfessionalInfoComponent', () => {
       
       expect(true).toBeTrue();
     }));
-  });
-
-  describe('onSalarioFocus', () => {
-    it('should handle salary focus event', () => {
-      const mockEvent = { target: { value: 'R$ 3.000,00' } };
-      component.onSalarioFocus(mockEvent);
-      
-      expect(true).toBeTrue();
-    });
   });
 
   describe('onSalarioBlur', () => {

@@ -1,6 +1,5 @@
 import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -54,7 +53,6 @@ describe('PersonalDataComponent', () => {
       imports: [
         PersonalDataComponent,
         ReactiveFormsModule,
-        NoopAnimationsModule,
         MatButtonModule,
         MatCardModule,
         MatFormFieldModule,

@@ -1,7 +1,63 @@
 import { TestBed } from '@angular/core/testing';
-import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
+import { provideHttpClient } from '@angular/common/http';
 import { ProfessionService } from './profession.service';
 import { Profession } from '../models/form-data.interface';
+
+// Helper functions to reduce nesting
+function verifyProfessionStructure(professions: Profession[]): void {
+  expect(professions.length).toBeGreaterThan(0);
+  const firstProfession = professions[0];
+  expect(firstProfession.id).toBeDefined();
+  expect(firstProfession.nome).toBeDefined();
+  expect(typeof firstProfession.id).toBe('string');
+  expect(typeof firstProfession.nome).toBe('string');
+}
+
+function verifyRequiredProfessions(professions: Profession[]): void {
+  const requiredProfessions = [
+    'Desenvolvedor Front-end',
+    'Desenvolvedor Back-end', 
+    'Analista de Sistemas'
+  ];
+
+  requiredProfessions.forEach(professionName => {
+    const found = professions.some(p => p.nome === professionName);
+    expect(found).withContext(`Should include profession: ${professionName}`).toBe(true);
+  });
+}
+
+function verifyUniqueness(professions: Profession[]): void {
+  const ids = new Set<string>();
+  const names = new Set<string>();
+  
+  professions.forEach(profession => {
+    expect(ids.has(profession.id)).withContext(`Duplicate ID: ${profession.id}`).toBe(false);
+    expect(names.has(profession.nome)).withContext(`Duplicate name: ${profession.nome}`).toBe(false);
+    ids.add(profession.id);
+    names.add(profession.nome);
+  });
+  
+  expect(ids.size).toBe(professions.length);
+  expect(names.size).toBe(professions.length);
+}
+
+function verifyApiDelay(professions: Profession[], startTime: number): void {
+  const endTime = Date.now();
+  const elapsed = endTime - startTime;
+  
+  expect(elapsed).toBeGreaterThanOrEqual(790);
+  expect(professions).toBeDefined();
+  expect(professions.length).toBeGreaterThan(0);
+}
+
+function verifyDataStructure(professions: Profession[]): void {
+  expect(professions.length).toBe(10);
+  expect(professions[0].id).toBe('1');
+  expect(professions[0].nome).toBe('Desenvolvedor Front-end');
+  expect(professions[9].id).toBe('10');
+  expect(professions[9].nome).toBe('Tech Lead');
+}
 
 describe('ProfessionService', () => {
   let service: ProfessionService;
@@ -9,8 +65,11 @@ describe('ProfessionService', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule],
-      providers: [ProfessionService]
+      providers: [
+        ProfessionService,
+        provideHttpClient(),
+        provideHttpClientTesting()
+      ]
     });
     service = TestBed.inject(ProfessionService);
     httpMock = TestBed.inject(HttpTestingController);
@@ -23,6 +82,8 @@ describe('ProfessionService', () => {
   it('should be created', () => {
     expect(service).toBeTruthy();
   });
+
+
 
   describe('getProfessions', () => {
     it('should return list of professions', (done) => {
@@ -48,46 +109,21 @@ describe('ProfessionService', () => {
 
     it('should return professions with correct structure', (done) => {
       service.getProfessions().subscribe(professions => {
-        expect(professions.length).toBeGreaterThan(0);
-        const firstProfession = professions[0];
-        expect(firstProfession.id).toBeDefined();
-        expect(firstProfession.nome).toBeDefined();
-        expect(typeof firstProfession.id).toBe('string');
-        expect(typeof firstProfession.nome).toBe('string');
+        verifyProfessionStructure(professions);
         done();
       });
     });
 
     it('should include specific professions', (done) => {
       service.getProfessions().subscribe(professions => {
-        const hasDevFrontend = professions.some(p => p.nome === 'Desenvolvedor Front-end');
-        const hasDevBackend = professions.some(p => p.nome === 'Desenvolvedor Back-end');
-        const hasAnalyst = professions.some(p => p.nome === 'Analista de Sistemas');
-        
-        expect(hasDevFrontend).toBe(true);
-        expect(hasDevBackend).toBe(true);
-        expect(hasAnalyst).toBe(true);
+        verifyRequiredProfessions(professions);
         done();
       });
     });
 
     it('should have unique profession IDs and names', (done) => {
       service.getProfessions().subscribe(professions => {
-        const ids = new Set();
-        const names = new Set();
-        
-        let allIdsUnique = true;
-        let allNamesUnique = true;
-        
-        for (const profession of professions) {
-          if (ids.has(profession.id)) allIdsUnique = false;
-          if (names.has(profession.nome)) allNamesUnique = false;
-          ids.add(profession.id);
-          names.add(profession.nome);
-        }
-        
-        expect(allIdsUnique).toBe(true);
-        expect(allNamesUnique).toBe(true);
+        verifyUniqueness(professions);
         done();
       });
     });
@@ -96,13 +132,7 @@ describe('ProfessionService', () => {
       const startTime = Date.now();
 
       service.getProfessions().subscribe(professions => {
-        const endTime = Date.now();
-        const elapsed = endTime - startTime;
-        
-        // Should take at least close to 800ms (allowing for some variance)
-        expect(elapsed).toBeGreaterThanOrEqual(790);
-        expect(professions).toBeDefined();
-        expect(professions.length).toBeGreaterThan(0);
+        verifyApiDelay(professions, startTime);
         done();
       });
     });
@@ -116,11 +146,7 @@ describe('ProfessionService', () => {
   describe('Profession data validation', () => {
     it('should have valid data structure', (done) => {
       service.getProfessions().subscribe(professions => {
-        expect(professions.length).toBe(10);
-        expect(professions[0].id).toBe('1');
-        expect(professions[0].nome).toBe('Desenvolvedor Front-end');
-        expect(professions[9].id).toBe('10');
-        expect(professions[9].nome).toBe('Tech Lead');
+        verifyDataStructure(professions);
         done();
       });
     });

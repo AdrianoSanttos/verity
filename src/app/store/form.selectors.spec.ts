@@ -1,5 +1,5 @@
 import * as fromForm from './form.selectors';
-import { FormState, AppState } from './form.reducer';
+import { FormState } from './form.reducer';
 
 describe('Form Selectors', () => {
   const mockFormState: FormState = {
@@ -31,10 +31,6 @@ describe('Form Selectors', () => {
     loading: false,
     error: null,
     validatedSteps: [true, false, false, false]
-  };
-
-  const mockAppState: AppState = {
-    form: mockFormState
   };
 
   describe('selectFormData', () => {

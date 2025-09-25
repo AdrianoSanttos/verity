@@ -1,6 +1,6 @@
 # Verity App - Formulário Multi-etapas
 
-Uma aplicação Angular 18 moderna com formulário dividido em 3 etapas, utilizando Angular Material, NgRx para gerenciamento de estado e recursos de acessibilidade.
+Uma aplicação Angular 20 moderna com formulário dividido em 3 etapas, utilizando Angular Material, NgRx para gerenciamento de estado e recursos de acessibilidade.
 
 ## 🚀 Funcionalidades
 
@@ -41,7 +41,7 @@ Uma aplicação Angular 18 moderna com formulário dividido em 3 etapas, utiliza
 
 ## 🛠️ Tecnologias Utilizadas
 
-- **Angular 18**: Framework principal
+- **Angular 20**: Framework principal
 - **Angular Material**: Componentes de UI
 - **NgRx**: Gerenciamento de estado (Store, Effects, Selectors)
 - **RxJS**: Programação reativa
@@ -104,6 +104,26 @@ Simula uma API de busca por CEP que retorna:
 - Endereço baseado no CEP
 - Bairro, cidade e estado correspondentes
 - Delay realista de resposta
+
+#### Exemplos de CEPs por Estado:
+- **CEPs iniciados com 01**: São Paulo (SP)
+  - Exemplo: `01310-100` → Av. Paulista, Bela Vista, São Paulo
+- **CEPs iniciados com 02**: Rio de Janeiro (RJ)
+  - Exemplo: `02451-000` → Rua das Laranjeiras, Laranjeiras, Rio de Janeiro
+- **CEPs iniciados com 03**: Minas Gerais (MG)
+  - Exemplo: `03134-000` → Rua da Bahia, Centro, Belo Horizonte
+- **CEPs iniciados com 04**: Espírito Santo (ES)
+  - Exemplo: `04567-000` → Av. Vitória, Praia do Canto, Vitória
+- **CEPs iniciados com 05**: Bahia (BA)
+  - Exemplo: `05678-000` → Rua do Pelourinho, Centro Histórico, Salvador
+- **CEPs iniciados com 06**: Paraná (PR)
+  - Exemplo: `06789-000` → Rua XV de Novembro, Centro, Curitiba
+- **CEPs iniciados com 07**: Ceará (CE)
+  - Exemplo: `07890-000` → Av. Beira Mar, Meireles, Fortaleza
+- **CEPs iniciados com 08**: Pernambuco (PE)
+  - Exemplo: `08901-000` → Rua do Bom Jesus, Recife Antigo, Recife
+
+> **Nota**: O serviço mockado reconhece qualquer CEP válido e retorna endereços fictícios baseados no padrão do estado correspondente.
 
 ### Serviço de Profissões
 Mock com lista de profissões incluindo:
