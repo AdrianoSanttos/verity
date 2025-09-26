@@ -296,6 +296,12 @@ Test Karma | Jasmine | Front-End:
   <img src="./docs/ngtest.jpg" alt="Form Page" width="60%">
 </p>
 
+Cypress
+
+<p align="center">
+  <img src="./docs/cypress.jpg" alt="Form Page" width="60%">
+</p>
+
 Responsividade para se adaptar a diferentes layouts de tela:
 
 <p align="center">
