@@ -1,0 +1,51 @@
+/* Personal Data Component Styles */
+
+.step-container {
+  margin: 20px 0;
+  padding: 20px;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.form-field {
+  width: 100%;
+  margin-bottom: 16px;
+}
+
+.button-group {
+  display: flex;
+  gap: 16px;
+  justify-content: flex-end;
+  margin-top: 20px;
+}
+
+/* Responsive design for mobile */
+@media (max-width: 600px) {
+  .step-container {
+    padding: 16px;
+    margin: 10px 0;
+  }
+  
+  .button-group {
+    flex-direction: column;
+    gap: 12px;
+  }
+  
+  .button-group button {
+    width: 100%;
+  }
+}
+
+/* Form reset styles - specific to this component */
+.form-reset .mat-mdc-form-field.mat-form-field-invalid .mat-mdc-text-field-wrapper .mdc-notched-outline__leading,
+.form-reset .mat-mdc-form-field.mat-form-field-invalid .mat-mdc-text-field-wrapper .mdc-notched-outline__notch,
+.form-reset .mat-mdc-form-field.mat-form-field-invalid .mat-mdc-text-field-wrapper .mdc-notched-outline__trailing {
+  border-color: rgba(0, 0, 0, 0.38) !important;
+}
+
+.form-reset .mat-mdc-form-field.mat-form-field-invalid .mat-mdc-text-field-wrapper.mdc-text-field--focused .mdc-notched-outline__leading,
+.form-reset .mat-mdc-form-field.mat-form-field-invalid .mat-mdc-text-field-wrapper.mdc-text-field--focused .mdc-notched-outline__notch,
+.form-reset .mat-mdc-form-field.mat-form-field-invalid .mat-mdc-text-field-wrapper.mdc-text-field--focused .mdc-notched-outline__trailing {
+  border-color: #1976d2 !important;
+}

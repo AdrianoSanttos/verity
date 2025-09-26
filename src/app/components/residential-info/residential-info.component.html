@@ -1,0 +1,123 @@
+<mat-card class="step-container" data-cy="residential-info-container">
+  <mat-card-header>
+    <mat-card-title>Etapa 2: Informações Residenciais</mat-card-title>
+  </mat-card-header>
+  
+  <mat-card-content>
+    <form [formGroup]="residentialForm" (ngSubmit)="onNext()" [class.form-reset]="isFormReset" data-cy="residential-info-form">
+      <mat-form-field class="form-field" appearance="outline">
+        <mat-label>CEP</mat-label>
+        <input matInput 
+               formControlName="cep"
+               mask="00000-000"
+               placeholder="00000-000"
+               data-cy="cep-input"
+               (blur)="onCepBlur()"
+               [attr.aria-describedby]="'cep-error'"
+               [attr.aria-invalid]="residentialForm.get('cep')?.invalid && residentialForm.get('cep')?.touched">
+        @if (shouldShowError('cep', 'required')) {
+          <mat-error data-cy="cep-required-error">
+            CEP é obrigatório
+          </mat-error>
+        }
+        @if (shouldShowError('cep', 'invalidCep')) {
+          <mat-error data-cy="cep-invalid-error">
+            CEP deve ter 8 dígitos (ex: 12345-678)
+          </mat-error>
+        }
+        @if (loading$ | async) {
+          <mat-spinner matSuffix 
+                       diameter="20"
+                       data-cy="cep-loading-spinner"
+                       aria-label="Carregando endereço">
+          </mat-spinner>
+        }
+      </mat-form-field>
+
+      <mat-form-field class="form-field" appearance="outline">
+        <mat-label>Endereço</mat-label>
+        <input matInput 
+               formControlName="endereco"
+               placeholder="Digite seu endereço"
+               data-cy="endereco-input"
+               [attr.aria-describedby]="'endereco-error'"
+               [attr.aria-invalid]="residentialForm.get('endereco')?.invalid && residentialForm.get('endereco')?.touched">
+        @if (shouldShowError('endereco', 'required')) {
+          <mat-error data-cy="endereco-required-error">
+            Endereço é obrigatório
+          </mat-error>
+        }
+      </mat-form-field>
+
+      <mat-form-field class="form-field" appearance="outline">
+        <mat-label>Bairro</mat-label>
+        <input matInput 
+               formControlName="bairro"
+               placeholder="Digite o bairro"
+               data-cy="bairro-input"
+               [attr.aria-describedby]="'bairro-error'"
+               [attr.aria-invalid]="residentialForm.get('bairro')?.invalid && residentialForm.get('bairro')?.touched">
+        @if (shouldShowError('bairro', 'required')) {
+          <mat-error data-cy="bairro-required-error">
+            Bairro é obrigatório
+          </mat-error>
+        }
+      </mat-form-field>
+
+      <mat-form-field class="form-field" appearance="outline">
+        <mat-label>Cidade</mat-label>
+        <input matInput 
+               formControlName="cidade"
+               placeholder="Digite a cidade"
+               data-cy="cidade-input"
+               [attr.aria-describedby]="'cidade-error'"
+               [attr.aria-invalid]="residentialForm.get('cidade')?.invalid && residentialForm.get('cidade')?.touched">
+        @if (shouldShowError('cidade', 'required')) {
+          <mat-error data-cy="cidade-required-error">
+            Cidade é obrigatória
+          </mat-error>
+        }
+      </mat-form-field>
+
+      <mat-form-field class="form-field" appearance="outline">
+        <mat-label>Estado</mat-label>
+        <mat-select formControlName="estado"
+                    data-cy="estado-select"
+                    [attr.aria-describedby]="'estado-error'"
+                    [attr.aria-invalid]="residentialForm.get('estado')?.invalid && residentialForm.get('estado')?.touched">
+          <mat-option value="">Selecione o Estado</mat-option>
+          @for (estado of estados; track estado.sigla) {
+            <mat-option [value]="estado.sigla"
+                        [attr.data-cy]="'estado-option-' + estado.sigla"
+                        [attr.aria-label]="estado.nome">
+              {{ estado.sigla }} - {{ estado.nome }}
+            </mat-option>
+          }
+        </mat-select>
+        @if (shouldShowError('estado', 'required')) {
+          <mat-error data-cy="estado-required-error">
+            Estado é obrigatório
+          </mat-error>
+        }
+      </mat-form-field>
+
+      <div class="button-group" data-cy="residential-info-buttons">
+        <button mat-button 
+                type="button" 
+                data-cy="residential-info-previous-button"
+                (click)="onPrevious()"
+                aria-label="Voltar para etapa anterior">
+          Anterior
+        </button>
+        <button mat-raised-button 
+                color="primary" 
+                type="submit"
+                data-cy="residential-info-next-button"
+                [disabled]="residentialForm.invalid"
+                aria-label="Avançar para próxima etapa">
+          Próximo
+        </button>
+      </div>
+    </form>
+  </mat-card-content>
+</mat-card>

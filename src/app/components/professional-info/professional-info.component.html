@@ -1,0 +1,104 @@
+<mat-card class="step-container" data-cy="professional-info-container">
+  <mat-card-header>
+    <mat-card-title>Etapa 3: Informações Profissionais</mat-card-title>
+  </mat-card-header>
+  
+  <mat-card-content>
+    <form [formGroup]="professionalForm" (ngSubmit)="onNext()" [class.form-reset]="isFormReset" data-cy="professional-info-form">
+      <mat-form-field class="form-field" appearance="outline">
+        <mat-label>Profissão</mat-label>
+        <mat-select formControlName="profissao"
+                    data-cy="profissao-select"
+                    [attr.aria-describedby]="'profissao-error'"
+                    [attr.aria-invalid]="professionalForm.get('profissao')?.invalid && professionalForm.get('profissao')?.touched"
+                    [disabled]="(loading$ | async) || false">
+          @for (profession of professions$ | async; track profession.id) {
+            <mat-option [value]="profession.nome"
+                        [attr.data-cy]="'profissao-option-' + profession.id"
+                        [attr.aria-label]="profession.nome">
+              {{ profession.nome }}
+            </mat-option>
+          }
+        </mat-select>
+        @if (shouldShowError('profissao', 'required')) {
+          <mat-error data-cy="profissao-required-error">
+            Profissão é obrigatória
+          </mat-error>
+        }
+        @if (loading$ | async) {
+          <mat-spinner matSuffix 
+                       diameter="20"
+                       data-cy="profissoes-loading-spinner"
+                       aria-label="Carregando profissões">
+          </mat-spinner>
+        }
+      </mat-form-field>
+
+      <mat-form-field class="form-field" appearance="outline">
+        <mat-label>Empresa</mat-label>
+        <input matInput 
+               formControlName="empresa"
+               placeholder="Digite o nome da empresa"
+               data-cy="empresa-input"
+               [attr.aria-describedby]="'empresa-error'"
+               [attr.aria-invalid]="professionalForm.get('empresa')?.invalid && professionalForm.get('empresa')?.touched">
+        @if (shouldShowError('empresa', 'required')) {
+          <mat-error data-cy="empresa-required-error">
+            Empresa é obrigatória
+          </mat-error>
+        }
+        @if (shouldShowError('empresa', 'minlength')) {
+          <mat-error data-cy="empresa-minlength-error">
+            Nome da empresa deve ter pelo menos 2 caracteres
+          </mat-error>
+        }
+      </mat-form-field>
+
+      <mat-form-field class="form-field" appearance="outline">
+        <mat-label>Salário</mat-label>
+        <input matInput 
+               formControlName="salario"
+               mask="separator.2"
+               thousandSeparator="."
+               decimalMarker=","
+               prefix="R$ "
+               placeholder="R$ 1.500,00"
+               data-cy="salario-input"
+               [leadZeroDateTime]="false"
+               [showMaskTyped]="false"
+               [allowNegativeNumbers]="false"
+               [attr.aria-describedby]="'salario-error'"
+               [attr.aria-invalid]="professionalForm.get('salario')?.invalid && professionalForm.get('salario')?.touched"
+               (blur)="onSalarioBlur($event)">
+        @if (shouldShowError('salario', 'required')) {
+          <mat-error data-cy="salario-required-error">
+            Salário é obrigatório
+          </mat-error>
+        }
+        @if (shouldShowError('salario', 'min')) {
+          <mat-error data-cy="salario-min-error">
+            Salário deve ser maior que zero
+          </mat-error>
+        }
+      </mat-form-field>
+
+      <div class="button-group" data-cy="professional-info-buttons">
+        <button mat-button 
+                type="button" 
+                data-cy="professional-info-previous-button"
+                (click)="onPrevious()"
+                aria-label="Voltar para etapa anterior">
+          Anterior
+        </button>
+        <button mat-raised-button 
+                color="primary" 
+                type="submit"
+                data-cy="professional-info-finish-button"
+                [disabled]="professionalForm.invalid"
+                aria-label="Finalizar formulário">
+          Finalizar
+        </button>
+      </div>
+    </form>
+  </mat-card-content>
+</mat-card>

@@ -1,0 +1,112 @@
+<mat-card class="step-container" data-cy="summary-container">
+  <mat-card-header>
+    <mat-card-title>Resumo dos Dados</mat-card-title>
+    <mat-card-subtitle>Confira todas as informações preenchidas</mat-card-subtitle>
+  </mat-card-header>
+  
+  <mat-card-content data-cy="summary-content">
+    @if (formData$ | async; as data) {
+      
+      <!-- Dados Pessoais -->
+      <div class="summary-section" data-cy="personal-data-summary">
+        <h3 class="summary-title">
+          <mat-icon aria-hidden="false" aria-label="Ícone de pessoa">person</mat-icon>
+          Dados Pessoais
+        </h3>
+        <div class="summary-item" data-cy="summary-nome">
+          <span class="summary-label">Nome Completo:</span>
+          <span class="summary-value">{{ data.personalData.nomeCompleto }}</span>
+        </div>
+        <div class="summary-item" data-cy="summary-data-nascimento">
+          <span class="summary-label">Data de Nascimento:</span>
+          <span class="summary-value">{{ formatDate(data.personalData.dataNascimento) }}</span>
+        </div>
+        <div class="summary-item" data-cy="summary-cpf">
+          <span class="summary-label">CPF:</span>
+          <span class="summary-value">{{ formatCPF(data.personalData.cpf) }}</span>
+        </div>
+        <div class="summary-item">
+          <span class="summary-label">Telefone:</span>
+          <span class="summary-value">{{ data.personalData.telefone }}</span>
+        </div>
+      </div>
+
+      <!-- Informações Residenciais -->
+      <div class="summary-section" data-cy="residential-info-summary">
+        <h3 class="summary-title">
+          <mat-icon aria-hidden="false" aria-label="Ícone de casa">home</mat-icon>
+          Informações Residenciais
+        </h3>
+        <div class="summary-item" data-cy="summary-cep">
+          <span class="summary-label">CEP:</span>
+          <span class="summary-value">{{ data.residentialInfo.cep }}</span>
+        </div>
+        <div class="summary-item" data-cy="summary-endereco">
+          <span class="summary-label">Endereço:</span>
+          <span class="summary-value">{{ data.residentialInfo.endereco }}</span>
+        </div>
+        <div class="summary-item" data-cy="summary-bairro">
+          <span class="summary-label">Bairro:</span>
+          <span class="summary-value">{{ data.residentialInfo.bairro }}</span>
+        </div>
+        <div class="summary-item" data-cy="summary-cidade">
+          <span class="summary-label">Cidade:</span>
+          <span class="summary-value">{{ data.residentialInfo.cidade }}</span>
+        </div>
+        <div class="summary-item" data-cy="summary-estado">
+          <span class="summary-label">Estado:</span>
+          <span class="summary-value">{{ data.residentialInfo.estado }}</span>
+        </div>
+      </div>
+
+      <!-- Informações Profissionais -->
+      <div class="summary-section" data-cy="professional-info-summary">
+        <h3 class="summary-title">
+          <mat-icon aria-hidden="false" aria-label="Ícone de trabalho">work</mat-icon>
+          Informações Profissionais
+        </h3>
+        <div class="summary-item" data-cy="summary-profissao">
+          <span class="summary-label">Profissão:</span>
+          <span class="summary-value">{{ data.professionalInfo.profissao }}</span>
+        </div>
+        <div class="summary-item" data-cy="summary-empresa">
+          <span class="summary-label">Empresa:</span>
+          <span class="summary-value">{{ data.professionalInfo.empresa }}</span>
+        </div>
+        <div class="summary-item" data-cy="summary-salario">
+          <span class="summary-label">Salário:</span>
+          <span class="summary-value">{{ formatSalary(data.professionalInfo.salario) }}</span>
+        </div>
+      </div>
+
+      <div class="button-group" data-cy="summary-buttons">
+        <button mat-button 
+                type="button" 
+                data-cy="summary-edit-button"
+                (click)="onEdit()"
+                aria-label="Editar informações">
+          <mat-icon>edit</mat-icon>
+          Editar
+        </button>
+        <button mat-button 
+                type="button" 
+                data-cy="summary-new-form-button"
+                (click)="onNewForm()"
+                color="accent"
+                aria-label="Criar novo formulário">
+          <mat-icon>add</mat-icon>
+          Novo Formulário
+        </button>
+        <button mat-raised-button 
+                color="primary" 
+                type="button"
+                data-cy="summary-export-pdf-button"
+                (click)="onExportPdf()"
+                aria-label="Exportar dados para PDF">
+          <mat-icon>download</mat-icon>
+          Exportar PDF
+        </button>
+      </div>
+    }
+  </mat-card-content>
+</mat-card>

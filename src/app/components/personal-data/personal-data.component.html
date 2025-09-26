@@ -1,0 +1,103 @@
+<mat-card class="step-container" data-cy="personal-data-container">
+  <mat-card-header>
+    <mat-card-title>Etapa 1: Dados Pessoais</mat-card-title>
+  </mat-card-header>
+  
+  <mat-card-content>
+    <form [formGroup]="personalForm" (ngSubmit)="onNext()" [class.form-reset]="isFormReset" data-cy="personal-data-form">
+      <mat-form-field class="form-field" appearance="outline">
+        <mat-label>Nome Completo</mat-label>
+        <input matInput 
+               formControlName="nomeCompleto"
+               placeholder="Digite seu nome completo"
+               data-cy="nome-completo-input"
+               [attr.aria-describedby]="'nome-error'"
+               [attr.aria-invalid]="personalForm.get('nomeCompleto')?.invalid && personalForm.get('nomeCompleto')?.touched">
+        @if (shouldShowError('nomeCompleto', 'required')) {
+          <mat-error data-cy="nome-completo-required-error">
+            Nome completo é obrigatório
+          </mat-error>
+        }
+        @if (shouldShowError('nomeCompleto', 'minlength')) {
+          <mat-error data-cy="nome-completo-minlength-error">
+            Nome deve ter pelo menos 3 caracteres
+          </mat-error>
+        }
+      </mat-form-field>
+
+      <mat-form-field class="form-field" appearance="outline">
+        <mat-label>Data de Nascimento</mat-label>
+        <input matInput 
+               formControlName="dataNascimento"
+               mask="00/00/0000"
+               placeholder="dd/mm/aaaa"
+               data-cy="data-nascimento-input"
+               [attr.aria-describedby]="'data-error'"
+               [attr.aria-invalid]="personalForm.get('dataNascimento')?.invalid && personalForm.get('dataNascimento')?.touched">
+        @if (shouldShowError('dataNascimento', 'required')) {
+          <mat-error data-cy="data-nascimento-required-error">
+            Data de nascimento é obrigatória
+          </mat-error>
+        }
+        @if (shouldShowError('dataNascimento', 'invalidDate')) {
+          <mat-error data-cy="data-nascimento-invalid-error">
+            Data inválida. Use o formato dd/mm/aaaa
+          </mat-error>
+        }
+      </mat-form-field>
+
+      <mat-form-field class="form-field" appearance="outline">
+        <mat-label>CPF</mat-label>
+        <input matInput 
+               formControlName="cpf"
+               mask="000.000.000-00"
+               placeholder="000.000.000-00"
+               data-cy="cpf-input"
+               [attr.aria-describedby]="'cpf-error'"
+               [attr.aria-invalid]="personalForm.get('cpf')?.invalid && personalForm.get('cpf')?.touched">
+        @if (shouldShowError('cpf', 'required')) {
+          <mat-error data-cy="cpf-required-error">
+            CPF é obrigatório
+          </mat-error>
+        }
+        @if (shouldShowError('cpf', 'invalidCpf')) {
+          <mat-error data-cy="cpf-invalid-error">
+            CPF deve ter 11 dígitos válidos
+          </mat-error>
+        }
+      </mat-form-field>
+
+      <mat-form-field class="form-field" appearance="outline">
+        <mat-label>Telefone</mat-label>
+        <input matInput 
+               formControlName="telefone"
+               mask="(00) 00000-0000"
+               placeholder="(00) 00000-0000"
+               data-cy="telefone-input"
+               [attr.aria-describedby]="'telefone-error'"
+               [attr.aria-invalid]="personalForm.get('telefone')?.invalid && personalForm.get('telefone')?.touched">
+        @if (shouldShowError('telefone', 'required')) {
+          <mat-error data-cy="telefone-required-error">
+            Telefone é obrigatório
+          </mat-error>
+        }
+        @if (shouldShowError('telefone', 'invalidPhone')) {
+          <mat-error data-cy="telefone-invalid-error">
+            Telefone deve ter 10 ou 11 dígitos
+          </mat-error>
+        }
+      </mat-form-field>
+
+      <div class="button-group" data-cy="personal-data-buttons">
+        <button mat-raised-button 
+                color="primary" 
+                type="submit"
+                data-cy="personal-data-next-button"
+                [disabled]="personalForm.invalid"
+                aria-label="Avançar para próxima etapa">
+          Próximo
+        </button>
+      </div>
+    </form>
+  </mat-card-content>
+</mat-card>

@@ -1,0 +1,69 @@
+<mat-toolbar color="primary" class="app-toolbar" data-cy="app-toolbar">
+  <mat-icon>assignment</mat-icon>
+  <span>Formulário Verity</span>
+</mat-toolbar>
+
+<div class="container" role="main" data-cy="app-container">
+  <mat-stepper 
+    #stepper 
+    data-cy="app-stepper"
+    [selectedIndex]="currentStep$ | async"
+    linear="false"
+    [orientation]="getStepperOrientation()"
+    labelPosition="bottom"
+    [animationDuration]="'300ms'"
+    (selectionChange)="onStepChange($event)">
+    
+    <mat-step label="Dados Pessoais" state="person" 
+              data-cy="step-personal-data"
+              [completed]="(validatedSteps$ | async)?.[0] || false">
+      <ng-template matStepContent>
+        <app-personal-data></app-personal-data>
+      </ng-template>
+    </mat-step>
+
+    <mat-step label="Informações Residenciais" state="home" 
+              data-cy="step-residential-info"
+              [completed]="(validatedSteps$ | async)?.[1] || false"
+              [optional]="false">
+      <ng-template matStepContent>
+        <app-residential-info></app-residential-info>
+      </ng-template>
+    </mat-step>
+
+    <mat-step label="Informações Profissionais" state="work" 
+              data-cy="step-professional-info"
+              [completed]="(validatedSteps$ | async)?.[2] || false"
+              [optional]="false">
+      <ng-template matStepContent>
+        <app-professional-info></app-professional-info>
+      </ng-template>
+    </mat-step>
+
+    <mat-step label="Resumo" state="done" 
+              data-cy="step-summary"
+              [completed]="(validatedSteps$ | async)?.[3] || false"
+              [optional]="false">
+      <ng-template matStepContent>
+        <app-summary></app-summary>
+      </ng-template>
+    </mat-step>
+
+    <!-- Custom icons for stepper -->
+    <ng-template matStepperIcon="person">
+      <mat-icon>person</mat-icon>
+    </ng-template>
+
+    <ng-template matStepperIcon="home">
+      <mat-icon>home</mat-icon>
+    </ng-template>
+
+    <ng-template matStepperIcon="work">
+      <mat-icon>work</mat-icon>
+    </ng-template>
+
+    <ng-template matStepperIcon="done">
+      <mat-icon>check_circle</mat-icon>
+    </ng-template>
+  </mat-stepper>
+</div>

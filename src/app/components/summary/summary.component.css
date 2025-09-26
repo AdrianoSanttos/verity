@@ -1,0 +1,164 @@
+/* Summary Component Styles */
+
+.step-container {
+  margin: 20px 0;
+  padding: 20px;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.summary-section {
+  margin: 24px 0;
+  padding: 20px;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  background-color: #fafafa;
+  transition: box-shadow 0.2s ease;
+}
+
+.summary-section:hover {
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.summary-title {
+  font-weight: 500;
+  font-size: 18px;
+  margin-bottom: 16px;
+  color: #3f51b5;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.summary-title mat-icon {
+  font-size: 20px;
+  width: 20px;
+  height: 20px;
+}
+
+.summary-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+  padding: 8px 0;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.summary-item:last-child {
+  border-bottom: none;
+  margin-bottom: 0;
+}
+
+.summary-label {
+  font-weight: 500;
+  color: #666;
+  min-width: 120px;
+}
+
+.summary-value {
+  font-weight: 400;
+  color: #333;
+  text-align: right;
+  word-break: break-word;
+}
+
+.button-group {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  margin-top: 32px;
+  flex-wrap: wrap;
+}
+
+.button-group button {
+  min-width: 140px;
+  font-weight: 500;
+}
+
+/* Export PDF button special styling */
+.button-group button[data-cy="summary-export-pdf-button"] {
+  background: linear-gradient(45deg, #4caf50, #2e7d32);
+  color: white;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.button-group button[data-cy="summary-export-pdf-button"]:hover {
+  background: linear-gradient(45deg, #388e3c, #1b5e20);
+  box-shadow: 0 4px 8px rgba(76, 175, 80, 0.3);
+}
+
+/* Edit button styling */
+.button-group button[data-cy="summary-edit-button"] {
+  border-color: #ff9800;
+  color: #ff9800;
+}
+
+.button-group button[data-cy="summary-edit-button"]:hover {
+  background-color: #fff3e0;
+}
+
+/* New form button styling */
+.button-group button[data-cy="summary-new-form-button"] {
+  border-color: #9c27b0;
+  color: #9c27b0;
+}
+
+.button-group button[data-cy="summary-new-form-button"]:hover {
+  background-color: #f3e5f5;
+}
+
+/* Responsive design for mobile */
+@media (max-width: 600px) {
+  .step-container {
+    padding: 16px;
+    margin: 10px 0;
+  }
+  
+  .summary-section {
+    padding: 16px;
+    margin: 16px 0;
+  }
+  
+  .summary-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+    text-align: left;
+  }
+  
+  .summary-label {
+    min-width: auto;
+    font-weight: 600;
+  }
+  
+  .summary-value {
+    text-align: left;
+    font-size: 14px;
+  }
+  
+  .button-group {
+    flex-direction: column;
+    gap: 12px;
+  }
+  
+  .button-group button {
+    width: 100%;
+    min-width: auto;
+  }
+}
+
+/* Tablet responsive */
+@media (max-width: 768px) and (min-width: 601px) {
+  .summary-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+  }
+  
+  .summary-value {
+    text-align: left;
+  }
+}

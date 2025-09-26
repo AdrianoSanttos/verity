@@ -1,0 +1,160 @@
+/* App Component Styles */
+
+/* Toolbar styling */
+.app-toolbar {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.app-toolbar mat-icon {
+  margin-right: 8px;
+}
+
+.app-toolbar span {
+  font-weight: 500;
+  letter-spacing: 0.5px;
+}
+
+/* Container layout */
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  min-height: calc(100vh - 64px);
+}
+
+/* Stepper customizations */
+::ng-deep .mat-stepper-horizontal-line {
+  background: transparent;
+}
+
+::ng-deep .mat-step-header {
+  pointer-events: auto;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+::ng-deep .mat-step-header:hover {
+  transform: translateY(-1px);
+}
+
+/* Visual feedback for blocked/incomplete steps */
+::ng-deep .mat-step-header:not(.cdk-step-completed) {
+  opacity: 0.5;
+  cursor: not-allowed !important;
+}
+
+::ng-deep .mat-step-header.cdk-step-completed {
+  opacity: 1;
+  cursor: pointer;
+  pointer-events: auto;
+}
+
+::ng-deep .mat-step-header.mat-step-header-selected {
+  opacity: 1;
+  cursor: default;
+}
+
+/* Disable pointer events for incomplete steps */
+::ng-deep .mat-step-header:not(.cdk-step-completed):not(.mat-step-header-selected) {
+  pointer-events: none;
+}
+
+::ng-deep .mat-stepper-horizontal .mat-step-header {
+  padding: 0 8px;
+}
+
+/* Step icon customization */
+::ng-deep .mat-step-icon {
+  background-color: #3f51b5;
+  color: white;
+}
+
+::ng-deep .mat-step-icon-selected {
+  background-color: #2196f3;
+}
+
+::ng-deep .mat-step-icon-state-done {
+  background-color: #4caf50;
+}
+
+/* Step label styling */
+::ng-deep .mat-step-label {
+  font-weight: 500;
+  color: #424242;
+}
+
+::ng-deep .mat-step-label.mat-step-label-active {
+  color: #3f51b5;
+  font-weight: 600;
+}
+
+::ng-deep .mat-step-label.mat-step-label-selected {
+  color: #2196f3;
+}
+
+/* Stepper content area */
+::ng-deep .mat-stepper-horizontal .mat-horizontal-content-container {
+  padding: 24px 0;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .container {
+    padding: 10px;
+  }
+  
+  ::ng-deep .mat-stepper-horizontal {
+    flex-direction: column;
+  }
+  
+  ::ng-deep .mat-stepper-horizontal .mat-step-header {
+    margin: 8px 0;
+    width: 100%;
+    justify-content: flex-start;
+  }
+  
+  ::ng-deep .mat-stepper-horizontal .mat-horizontal-content-container {
+    padding: 16px 0;
+  }
+  
+  /* Mobile stepper adjustments */
+  ::ng-deep .mat-stepper-horizontal-line {
+    display: none;
+  }
+}
+
+@media (max-width: 600px) {
+  .app-toolbar {
+    padding: 0 16px;
+  }
+  
+  .app-toolbar span {
+    font-size: 18px;
+  }
+}
+
+/* Loading states and animations */
+::ng-deep .mat-step-header .mat-step-icon {
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+::ng-deep .mat-step-header:hover .mat-step-icon {
+  transform: scale(1.05);
+}
+
+/* Accessibility improvements */
+::ng-deep .mat-step-header[aria-selected="true"] {
+  outline: 2px solid #3f51b5;
+  outline-offset: 2px;
+}
+
+/* Custom step states */
+::ng-deep .mat-step-icon-state-edit {
+  background-color: #ff9800;
+}
+
+::ng-deep .mat-step-icon-state-error {
+  background-color: #f44336;
+}
